@@ -1,15 +1,10 @@
 <?php
 // Retrieve the necessary environment variables
-// $host = getenv('DB_HOST');
-// $port = getenv('DB_PORT');
-// $db = getenv('DB_NAME');
-// $user = getenv('DB_USER');
-// $password = getenv('DB_PASSWORD');
+$host = getenv('DB_HOST');
+$port = getenv('DB_PORT');
+$db = getenv('DB_NAME');
+$user = getenv('DB_USER');
 
-$host = 'mysql';
-$port = 3306;
-$db = 'university';
-$user = 'db_user';
 $password_file = '/run/secrets/mysql_password';
 
 // Read the MySQL password from the secret file

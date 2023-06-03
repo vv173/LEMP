@@ -21,12 +21,13 @@ services:
       start_period: 20s
 
   php-fpm:
-    image: bitnami/php-fpm:8.1.19
-    # image: php:8.1.20RC1-fpm-alpine3.18
+    # image: bitnami/php-fpm:8.1.19
+    # image: php:8.1.20RC1-fpm-bullseye
+    image: clearlinux/php-fpm:8.2.6
     restart: always
     environment:
       DB_NAME: university
-      DB_USER: test
+      DB_USER: db_user
       DB_PASSWORD: /run/secrets/mysql_password
       DB_PORT: 3306
       DB_HOST: mysql
