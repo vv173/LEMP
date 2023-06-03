@@ -10,7 +10,10 @@ $host = 'mysql';
 $port = 3306;
 $db = 'university';
 $user = 'test';
-$password = 'test';
+$password_file = '/run/secrets/mysql_password';
+
+// Read the MySQL password from the secret file
+$password = trim(file_get_contents($password_file));
 
 // Create a new PDO instance
 $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4";

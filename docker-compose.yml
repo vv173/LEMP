@@ -1,4 +1,4 @@
-version: '3'
+version: '3.19'
 services:
   nginx:
     image: nginx:latest
@@ -20,7 +20,7 @@ services:
     environment:
       DB_NAME: university
       DB_USER: test
-      DB_PASSWORD: test
+      DB_PASSWORD: /run/secrets/mysql_password
       DB_PORT: 3306
       DB_HOST: mysql
     volumes:
@@ -29,6 +29,9 @@ services:
       - mysql
     networks:
       - backend
+    secrets:
+      - mysql_password
+      - mysql_root_password
 
   mysql:
     image: mysql:latest
@@ -39,12 +42,15 @@ services:
     environment:
       MYSQL_DATABASE: university
       MYSQL_USER: test
-      MYSQL_PASSWORD: test
-      MYSQL_ROOT_PASSWORD: test
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql_password
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
     volumes:
       - ./db:/docker-entrypoint-initdb.d
     networks:
       - backend
+    secrets:
+      - mysql_password
+      - mysql_root_password
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -56,6 +62,13 @@ services:
       - mysql
     networks:
       - backend
+
 networks:
     frontend:
     backend:
+
+secrets:
+   mysql_password:
+     file: ./secrets/mysql_password.txt
+   mysql_root_password:
+     file: ./secrets/mysql_root_password.txt
