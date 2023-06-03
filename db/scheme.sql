@@ -1,5 +1,3 @@
-CREATE DATABASE university;
-
 USE university;
 
 CREATE TABLE students (

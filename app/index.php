@@ -1,10 +1,16 @@
 <?php
 // Retrieve the necessary environment variables
-$host = getenv('DB_HOST');
-$port = getenv('DB_PORT');
-$db = getenv('DB_NAME');
-$user = getenv('DB_USER');
-$password = getenv('DB_PASSWORD');
+// $host = getenv('DB_HOST');
+// $port = getenv('DB_PORT');
+// $db = getenv('DB_NAME');
+// $user = getenv('DB_USER');
+// $password = getenv('DB_PASSWORD');
+
+$host = 'mysql';
+$port = 3306;
+$db = 'university';
+$user = 'test';
+$password = 'test';
 
 // Create a new PDO instance
 $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4";
