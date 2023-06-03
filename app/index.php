@@ -9,7 +9,7 @@
 $host = 'mysql';
 $port = 3306;
 $db = 'university';
-$user = 'test';
+$user = 'db_user';
 $password_file = '/run/secrets/mysql_password';
 
 // Read the MySQL password from the secret file

@@ -1,22 +1,29 @@
-version: '3.19'
+version: "3.19"
 services:
   nginx:
-    image: nginx:latest
+    build:
+      context: ./nginx
+      args:
+        - PORT=${NGINX_PORT}
+    restart: always
     ports:
-      - 6666:8080
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      - 6666:${NGINX_PORT}
     depends_on:
       - php-fpm
     networks:
       - frontend
       - backend
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${NGINX_PORT}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
 
   php-fpm:
-    image: bitnami/php-fpm
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile-php
+    image: bitnami/php-fpm:8.1.19
+    # image: php:8.1.20RC1-fpm-alpine3.18
+    restart: always
     environment:
       DB_NAME: university
       DB_USER: test
@@ -41,7 +48,7 @@ services:
       - 3306:3306
     environment:
       MYSQL_DATABASE: university
-      MYSQL_USER: test
+      MYSQL_USER: db_user
       MYSQL_PASSWORD_FILE: /run/secrets/mysql_password
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
     volumes:
@@ -54,6 +61,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
+    restart: always
     ports:
       - 6001:80
     environment:
@@ -64,11 +72,11 @@ services:
       - backend
 
 networks:
-    frontend:
-    backend:
+  frontend:
+  backend:
 
 secrets:
-   mysql_password:
-     file: ./secrets/mysql_password.txt
-   mysql_root_password:
-     file: ./secrets/mysql_root_password.txt
+  mysql_password:
+    file: ./secrets/mysql_password.txt
+  mysql_root_password:
+    file: ./secrets/mysql_root_password.txt
