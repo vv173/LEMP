@@ -11,5 +11,5 @@ docker compose build
 ##### Run:
 
 ```
-docker compose run -d
+docker compose up -d
 ```
